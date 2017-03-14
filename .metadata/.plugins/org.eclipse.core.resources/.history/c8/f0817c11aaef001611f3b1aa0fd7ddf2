@@ -1,0 +1,31 @@
+package PileOuFace;
+
+import java.util.Random;
+
+/**
+ * 
+ * @author Hexa
+ *
+ */
+public class PileOuFace {
+
+	public static void main(String[] args) 
+	{
+	 int tirage;
+		
+		tirage = lance();
+		if (tirage == 1)
+			System.out.println("Pile");
+		else
+			System.out.println("Face");	
+
+	}
+
+	public static int lance()
+	{
+	 int tirage;
+	 tirage = new Random().nextInt(2)+1;
+	 return tirage;
+	}
+	
+}

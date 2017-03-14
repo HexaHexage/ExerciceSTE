@@ -1,0 +1,25 @@
+package main;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+
+import comptes.Compte;
+import comptes.CompteGeneral;
+
+public class ListeCompteGeneraux 
+{
+ private ArrayList<CompteGeneral> listCG = new ArrayList<>();
+
+
+public void add(Compte cpt) 
+{
+	listCG.add((CompteGeneral) cpt);
+}
+
+
+public ArrayList<CompteGeneral> getList() {
+	
+	return listCG;
+}
+
+}

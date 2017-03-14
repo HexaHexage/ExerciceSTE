@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="java.util.Random"/>
+<fullyQualifiedTypeName name="vaisseaux.Empire"/>
+<fullyQualifiedTypeName name="etape02.AbstractSudokuFactory"/>
+<fullyQualifiedTypeName name="java.util.Scanner"/>
+<fullyQualifiedTypeName name="exempleException.WrongNumberException"/>
+<fullyQualifiedTypeName name="java.util.InputMismatchException"/>
+<fullyQualifiedTypeName name="exception.InvalidSudokuValueException"/>
+<fullyQualifiedTypeName name="exception.OutOfSudokuException"/>
+<fullyQualifiedTypeName name="java.lang.Override"/>
+<fullyQualifiedTypeName name="menu.Menu"/>
+<fullyQualifiedTypeName name="java.awt.MenuItem"/>
+<fullyQualifiedTypeName name="menu.MenuItem"/>
+<fullyQualifiedTypeName name="java.util.HashSet"/>
+<fullyQualifiedTypeName name="comptes.Compte"/>
+<fullyQualifiedTypeName name="main.ListeCompteGeneraux"/>
+<fullyQualifiedTypeName name="comptes.GeneralNonSubdivisable"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="comptes.CompteGeneral"/>
+<fullyQualifiedTypeName name="comptes.CompteParticulier"/>
+<fullyQualifiedTypeName name="comptes.PositionBilan"/>
+<fullyQualifiedTypeName name="java.util.Date"/>
+<fullyQualifiedTypeName name="be.steformations.pc.comics.jdbc.ComicsJDBCImpl"/>
+</qualifiedTypeNameHistroy>

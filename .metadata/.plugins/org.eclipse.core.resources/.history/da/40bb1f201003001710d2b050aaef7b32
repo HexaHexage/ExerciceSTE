@@ -1,0 +1,26 @@
+package comptes;
+
+public  class GeneralNonSubdivisable extends CompteGeneral
+{
+	boolean SubDiv = true;
+		
+	public String getLibelle()
+	{
+		return this.Libelle;
+	}
+	public void setLibelle(String libelle)
+	{
+		this.Libelle = libelle;
+		
+	}
+	public String getNumero()
+	{
+		return this.Numero;
+	}
+	public void setNom(String numero)
+	{
+		this.Numero = numero;
+		
+	}
+	
+}

@@ -1,0 +1,38 @@
+package main;
+
+
+
+import menu.Menu;
+import menu.MenuItem;
+
+public class Main
+{
+
+	public static void main(String[] args)
+	{
+		
+			Menu menuComptaGeneral = new Menu();
+			menuComptaGeneral.addMenu(new MenuItem("Creer", ()->{}));
+			menuComptaGeneral.addMenu(new MenuItem("Modifier", ()->{}));
+			menuComptaGeneral.addMenu(new MenuItem("Supprimer", ()->{}));
+			menuComptaGeneral.addMenu(new MenuItem("Lister", ()->{}));
+			
+			Menu menuComptaParticulier = new Menu();
+			menuComptaGeneral.addMenu(new MenuItem("Creer", ()->{}));
+			menuComptaGeneral.addMenu(new MenuItem("Modifier", ()->{}));
+			menuComptaGeneral.addMenu(new MenuItem("Supprimer", ()->{}));
+			menuComptaGeneral.addMenu(new MenuItem("Lister", ()->{}));
+			
+			Menu menuCompta = new Menu();
+			menuCompta.addMenu(new MenuItem("Compte General", ()->menuComptaGeneral.start()));
+			menuCompta.addMenu(new MenuItem("Compte Particulier", ()->menuComptaParticulier.start()));
+			
+			menuCompta.start();
+
+	
+
+	}
+
+	
+
+}

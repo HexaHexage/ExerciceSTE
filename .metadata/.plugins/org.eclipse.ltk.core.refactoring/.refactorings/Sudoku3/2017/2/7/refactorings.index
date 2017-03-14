@@ -1,0 +1,14 @@
+1487324740864	Rename type 'Ecran'
+1487324784281	Rename type 'Sudoku'
+1487325066666	Extract interface 'Sudoku'
+1487325097321	Extract interface 'Ecran'
+1487325214230	Move compilation unit
+1487325236282	Move compilation unit
+1487328494377	Copy package
+1487328500420	Delete element
+1487328510784	Copy package
+1487328526480	Rename type 'EcranV1'
+1487328538053	Rename type 'SudokuV1'
+1487328549804	Rename type 'EcranV1'
+1487328561589	Rename type 'SudokuV1'
+1487329164969	Rename package 'etape01'

@@ -1,0 +1,6 @@
+package comptes;
+
+public abstract class ParticulierSubdivisable extends CompteGeneral
+{
+
+}

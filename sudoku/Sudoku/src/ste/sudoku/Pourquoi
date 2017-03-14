@@ -1,0 +1,9 @@
+Pourquoi la factory gère la création des cellules : 
+
+Imaginons une version du sudoku 9*9 mais avec des cellules différentes, des cellules joker ... 
+ou des cellules ayant une zone sup comme la diagonale.
+
+Donc version sup, qui crée un sudoku 9*9 mais reçoit des cellules différentes du classique 
+sudoku 9*9
+
+--> Souplesse pouvoir réutiliser des objets sudokuV1 dans un autre contexte 

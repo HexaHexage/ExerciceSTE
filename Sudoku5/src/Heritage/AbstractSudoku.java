@@ -1,0 +1,227 @@
+package Heritage;
+
+import java.util.Arrays;
+
+
+import exception.OutOfSudokuException;
+import etape04.Sudoku;
+import etape04.Cell;
+import etape04.SudokuValue;
+
+public abstract class AbstractSudoku implements Sudoku
+{
+
+	private Cell[][] grid;
+	private SudokuValue[] tabValid;
+	private int nbLines;
+	private int nbCols;
+	
+	public AbstractSudoku (int line, int column,SudokuValue[] validValue)
+	{
+		this.tabValid=validValue;
+		this.nbLines=line;
+		this.nbCols=column;
+	}
+	
+
+	@Override
+	public Cell getCell(int line, int column) throws OutOfSudokuException 
+	{
+		if (isValidPosition(line, column)) 
+		{
+			return grid[line][column];
+		} 
+		else
+		{
+			throw new OutOfSudokuException(String.format(
+					"Pas de cellule en position ligne = %s colonne = %s", line, column));
+		}
+	}
+
+	@Override
+	public void setGrid(Cell[][] grid)
+	{
+		this.grid=grid;
+		
+	}
+
+
+	@Override
+	public int getLineSize()
+	{
+		return nbLines;
+	}
+
+	@Override
+	public int getColumnSize()
+	{
+		return nbCols;
+	}
+
+	@Override
+	public boolean isValidPosition(int line, int column)
+	{
+		return line >= 0 && line < getLineSize() && column >= 0
+				&& column < getColumnSize();
+	}
+
+	@Override
+	public SudokuValue[] getValidValue() 
+	{
+//		Encapsulation
+		return Arrays.copyOf(tabValid, tabValid.length);
+	}
+	
+	@Override
+	public int hashCode() 
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.deepHashCode(grid);
+		result = prime * result + Arrays.hashCode(tabValid);
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AbstractSudoku other = (AbstractSudoku) obj;
+		if (!Arrays.deepEquals(grid, other.grid))
+			return false;
+		if (!Arrays.equals(tabValid, other.tabValid))
+			return false;
+		return true;
+	}
+	@Override
+	public String toString()
+	{
+		return "AbstractSudoku [grid=" + Arrays.deepToString(grid) + ", tabValid="
+				+ Arrays.toString(tabValid) + "]";
+	}
+
+}
+
+/*public abstract class AbstractSudoku implements Sudoku
+{
+	private byte[][] grid;
+	private byte[] tabValid;
+	
+	public AbstractSudoku (int line, int column, byte[] validValue)
+	{
+		this.grid=new byte[line][column];
+		this.tabValid=validValue;
+	}
+	
+	@Override
+	public void setValue(byte val, int line, int column)
+			throws OutOfSudokuException, InvalidSudokuValueException 
+	{
+		if (isValidPosition(line, column))
+		{			
+			if (!isValidValue(val))
+			{
+				throw new InvalidSudokuValueException(String.format(
+						"Valeur non valide : %s", val));
+			}
+			grid[line][column] = val;
+		} 
+		else
+		{
+			throw new OutOfSudokuException(String.format(
+					"Il n'y a pas de cellule en position ligne = %s colonne = %s", line, column));
+		}
+	}
+	@Override
+	public byte getValue(int line, int column) throws OutOfSudokuException
+	{
+		if (isValidPosition(line, column))
+		{
+			return grid[line][column];
+		} 
+		else
+		{
+			throw new OutOfSudokuException(String.format(
+					"Il n'y a pas de cellule en position ligne = %s colonne = %s", line, column));
+		}
+	}
+	
+	@Override
+	public int getLineSize() 
+	{
+		return grid.length;
+	}
+
+	@Override
+	public int getColumnSize() 
+	{
+		return grid[0].length;
+	}
+
+	@Override
+	public boolean isValidPosition(int line, int column) 
+	{
+		return line >= 0 && line < getLineSize() && column >= 0
+				&& column < getColumnSize();
+	}
+	
+	@Override
+	public byte[] getValidValues() 
+	{
+		return Arrays.copyOf(tabValid, tabValid.length);
+	}
+	
+	@Override
+	public boolean isValidValue(byte val)
+	{
+		boolean valid = false;
+		int pos = 0;
+		while (pos < tabValid.length && !valid)
+		{
+			valid = val == tabValid[pos];
+			pos++;
+		}
+		return valid;
+	}
+	
+	@Override
+	public int hashCode() 
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.deepHashCode(grid);
+		result = prime * result + Arrays.hashCode(tabValid);
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AbstractSudoku other = (AbstractSudoku) obj;
+		if (!Arrays.deepEquals(grid, other.grid))
+			return false;
+		if (!Arrays.equals(tabValid, other.tabValid))
+			return false;
+		return true;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return "AbstractSudoku [grid=" + Arrays.deepToString(grid) + ", tabValid="
+				+ Arrays.toString(tabValid) + "]";
+	}
+	
+	
+	
+	
+}*/

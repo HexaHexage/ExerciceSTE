@@ -1,0 +1,82 @@
+package main;
+
+
+
+import menu.Menu;
+import menu.MenuItem;
+import java.util.Scanner;
+import comptes.GeneralNonSubdivisable;
+import comptes.Compte;
+import comptes.CompteGeneral;
+
+
+public class Main
+{
+
+	public static void main(String[] args)
+	{
+			Menu menuGeneralCreer = new Menu();
+			menuGeneralCreer.addMenu(new MenuItem("Non subdivisible", ()->
+			{
+				System.out.println("Entrer le numéro du compte");
+				Scanner sc = new Scanner(System.in);
+				String num = sc.nextLine();
+				
+				System.out.println("Entrer le nom du compte");
+				String libelle = sc.nextLine();
+				
+				
+				creerCGNS(num, libelle);
+				
+			}));
+			menuGeneralCreer.addMenu(new MenuItem("Subdivisible par compte general", ()->{}));
+			menuGeneralCreer.addMenu(new MenuItem("Subdivisible par compte particulier", ()->{}));
+			
+		
+			Menu menuComptaOperationsComptable = new Menu();
+			menuComptaOperationsComptable.addMenu(new MenuItem("Creer ecriture comptable", ()->{}));
+			menuComptaOperationsComptable.addMenu(new MenuItem("Modifier ecriture comptable", ()->{}));
+			menuComptaOperationsComptable.addMenu(new MenuItem("Supprimer ecriture comptable", ()->{}));
+			menuComptaOperationsComptable.addMenu(new MenuItem("Afficher toutes les operations d'un compte et son solde", ()->{}));
+			menuComptaOperationsComptable.addMenu(new MenuItem("Afficher Bilan", ()->{}));
+			
+			
+			Menu menuComptaGeneral = new Menu();
+			menuComptaGeneral.addMenu(new MenuItem("Creer", ()->menuGeneralCreer.start()));
+			menuComptaGeneral.addMenu(new MenuItem("Modifier", ()->{}));
+			menuComptaGeneral.addMenu(new MenuItem("Supprimer", ()->{}));
+			menuComptaGeneral.addMenu(new MenuItem("Lister", ()->{}));
+			
+			Menu menuComptaParticulier = new Menu();
+			menuComptaParticulier.addMenu(new MenuItem("Creer", ()->{}));
+			menuComptaParticulier.addMenu(new MenuItem("Modifier", ()->{}));
+			menuComptaParticulier.addMenu(new MenuItem("Supprimer", ()->{}));
+			menuComptaParticulier.addMenu(new MenuItem("Lister", ()->{}));
+			
+			Menu menuCompta = new Menu();
+			menuCompta.addMenu(new MenuItem("Compte General", ()->menuComptaGeneral.start()));
+			menuCompta.addMenu(new MenuItem("Compte Particulier", ()->menuComptaParticulier.start()));
+			menuCompta.addMenu(new MenuItem("Operations Comptable", ()->menuComptaOperationsComptable.start()));
+			menuCompta.start();
+
+	
+
+	}
+	public static void creerCGNS(String num, String nom)
+	{
+		Compte cpt = new GeneralNonSubdivisable();
+		cpt.Libelle = nom;
+		cpt.Numero = num;
+		System.out.println(cpt);
+		
+		//listeCompteGeneraux = new  
+		
+		//ListeCompteGeneraux.add(cpt);
+		
+		/*871445*/
+		
+	}
+	
+	
+
+}

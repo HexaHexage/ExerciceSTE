@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="_05_TestRemoveContact" project="exercice-contactsMoi" tests="1" started="1" failures="0" errors="0" ignored="0">
+  <testsuite name="be.steformations.java_data.contacts.tests.jdbc.tests._05_TestRemoveContact" time="0.132">
+    <testcase name="testDeleteContact" classname="be.steformations.java_data.contacts.tests.jdbc.tests._05_TestRemoveContact" time="0.132"/>
+  </testsuite>
+</testrun>

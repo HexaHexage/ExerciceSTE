@@ -1,0 +1,8 @@
+package comptes;
+
+public abstract class CompteGeneral extends Compte
+{
+	PositionBilan PosBil ;
+	boolean SubDiv;
+	
+}

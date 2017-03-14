@@ -1,0 +1,11 @@
+INDEX VERSION 1.129+/home/webco01/Bureau/JAVA/.metadata/.plugins/org.eclipse.jdt.core
+4172865983.index
+2594033556.index
+3760926371.index
+4247428387.index
+1916029800.index
+820764632.index
+875539412.index
+131870850.index
+2857057911.index
+1126734658.index

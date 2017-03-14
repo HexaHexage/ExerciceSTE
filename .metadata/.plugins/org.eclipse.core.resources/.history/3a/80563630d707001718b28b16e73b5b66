@@ -1,0 +1,126 @@
+package be.steformations.pc.contact.jdbc;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import be.steformations.java_data.contacts.interfaces.jdbc.ContactJdbcManager;
+
+public class ContactJDBCImpl implements ContactJdbcManager
+{
+	private String url;
+	private String login;
+	private String pwd;
+	
+	public ContactJDBCImpl(String url, String login, String pwd) 
+	{
+		super();
+		this.url = url;
+		this.login = login;
+		this.pwd = pwd;
+	}
+
+	@Override
+	public String getEmailByContact(String firstname, String name) 
+	{
+		String email = null;
+		
+		if ( firstname != null && name != null ) {
+			
+			String sql = "SELECT email AS Email "
+					+    "FROM contacts "
+					+    "WHERE upper(prenom) = upper(?) AND upper(nom) = upper(?)";
+			
+			// try with resource
+			// les objets de type Closeable peuvent être déclarés et instanciés dans les parenthèses
+			// du try et leur méthode close() sera automatiquement appelée à la fin du try
+			try (
+				java.sql.Connection connexion 
+					= java.sql.DriverManager.getConnection(this.url, this.login, this.pwd);
+				java.sql.PreparedStatement requete = connexion.prepareStatement(sql);
+			) {
+				requete.setString(1, firstname);
+				requete.setString(2, name);
+				
+				try (
+					java.sql.ResultSet resultat = requete.executeQuery();	
+				) {
+					if ( resultat.next() ) {
+						email = resultat.getString("Email");
+					}
+				}
+				
+			} catch ( java.sql.SQLException e ) {
+				e.printStackTrace();
+			}
+		}
+		
+		return email;
+	}
+
+	@Override
+	public List<String> getEmailsByCountry(String abbreviation) 
+	{
+		List<String> email = new ArrayList<String>();
+		
+		if (  abbreviation!= null  ) {
+			
+			String sql = "SELECT email AS Email "
+					+    "FROM contacts JOIN pays ON pays.id = contacts.pays "
+					+    "WHERE abreviation = ?";
+			
+			// try with resource
+			// les objets de type Closeable peuvent être déclarés et instanciés dans les parenthèses
+			// du try et leur méthode close() sera automatiquement appelée à la fin du try
+			try (
+				java.sql.Connection connexion 
+					= java.sql.DriverManager.getConnection(this.url, this.login, this.pwd);
+				java.sql.PreparedStatement requete = connexion.prepareStatement(sql);
+			) {
+				requete.setString(1, abbreviation);
+				//requete.setString(2, name);
+				
+				try
+				(
+						java.sql.ResultSet resultat = requete.executeQuery();
+				) 
+				{
+					while ( resultat.next() ) 
+					{
+						email.add(resultat.getString("Email"));
+						
+						
+					}
+				}
+				
+			} catch ( java.sql.SQLException e ) {
+				e.printStackTrace();
+			}
+		}
+		
+		return email;
+	}
+
+	@Override
+	public List<String> getTagsByContact(String firstname, String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int createAndSaveContact(String firstname, String name, String email, String countryAbbreviation,
+			String[] tagsValues) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void removeContact(int id) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+
+	
+	
+}

@@ -1,0 +1,7 @@
+package comptes;
+
+public  class GeneralSubdivisible extends CompteGeneral
+{
+ boolean SubDiv = true;
+ 
+}

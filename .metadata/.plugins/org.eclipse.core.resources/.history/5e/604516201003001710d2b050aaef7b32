@@ -1,0 +1,8 @@
+package comptes;
+
+public abstract class Compte 
+{
+	public String Numero;
+	public String Libelle;
+	
+}

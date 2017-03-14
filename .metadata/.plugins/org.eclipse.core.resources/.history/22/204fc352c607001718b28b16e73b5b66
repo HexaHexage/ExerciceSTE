@@ -1,0 +1,7 @@
+package be.steformations.pc.contact.jdbc;
+
+import be.steformations.java_data.contacts.interfaces.jdbc.ContactJdbcManager;
+
+public class ContactJDBCImpl implements ContactJdbcManager{
+
+}

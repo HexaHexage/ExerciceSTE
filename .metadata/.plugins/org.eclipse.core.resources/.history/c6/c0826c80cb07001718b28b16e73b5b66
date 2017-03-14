@@ -1,0 +1,23 @@
+package be.steformations.java_data.contacts.tests.jdbc.tests;
+
+import be.steformations.java_data.contacts.interfaces.jdbc.ContactJdbcManager;
+import be.steformations.pc.contact.jdbc.ContactJDBCImpl;
+
+public class ContactJdbcTestFactory {
+	
+	public static ContactJdbcManager getContactJdbcManager() 
+	{
+
+		
+			String login = "postgres";
+			String pwd = "postgres";
+			String url = "jdbc:postgresql://localhost:5432/comics";
+			
+			//login ="root";
+			//pwd = "mysql";
+			//url = "jdbc:mysql://localhost:3306/comics";
+			
+			return new ContactJDBCImpl(url, login, pwd);
+		
+	}
+}

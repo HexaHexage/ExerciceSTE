@@ -1,0 +1,6 @@
+package comptes;
+
+public abstract class GeneralSubdivisible extends CompteGeneral
+{
+
+}

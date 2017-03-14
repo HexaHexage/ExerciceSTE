@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="_02_TestGetEmailsByCountry" project="exercice-contacts" tests="2" started="2" failures="0" errors="0" ignored="0">
+  <testsuite name="be.steformations.java_data.contacts.tests.jdbc.tests._02_TestGetEmailsByCountry" time="0.073">
+    <testcase name="testGetEmailsByCountryKo" classname="be.steformations.java_data.contacts.tests.jdbc.tests._02_TestGetEmailsByCountry" time="0.066"/>
+    <testcase name="testGetEmailsByCountryOk" classname="be.steformations.java_data.contacts.tests.jdbc.tests._02_TestGetEmailsByCountry" time="0.007"/>
+  </testsuite>
+</testrun>

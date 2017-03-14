@@ -1,0 +1,279 @@
+package be.steformations.pc.comics.jdbc;
+
+import be.steformations.java_data.comics.interfaces.jdbc.ComicsJDBC;
+
+public class ComicsJDBCImpl implements ComicsJDBC {
+
+	private String url;
+	private String login;
+	private String pwd;
+	
+	public ComicsJDBCImpl(String url, String login, String pwd) {
+		super();
+		this.url = url;
+		this.login = login;
+		this.pwd = pwd;
+	}
+
+	@Override
+	public boolean ping() {
+		boolean pinged = false;
+		
+		/*
+		// quel pilotes sont chargés ?
+		java.util.Enumeration<java.sql.Driver> pilotes
+			= java.sql.DriverManager.getDrivers();
+		while( pilotes.hasMoreElements() ) {
+			java.sql.Driver d = pilotes.nextElement();
+			System.out.println(d);
+		}
+		*/
+		
+		java.sql.Connection connexion = null;
+		
+		try {
+			connexion = java.sql.DriverManager.getConnection(this.url, this.login, this.pwd);
+			pinged = true;
+		} catch ( java.sql.SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if ( connexion != null && !connexion.isClosed() ) {
+					connexion.close();
+				}
+			} catch ( java.sql.SQLException e) {}
+		}
+		
+		return pinged;
+	}
+
+	@Override
+	public String selectAka(String prenom, String nom) {
+		String aka = null;
+		
+		if ( prenom != null && nom != null ) {
+			java.sql.Connection connexion = null;
+			java.sql.Statement requete = null;  // requete (INSERT, UPDATE, DELETE, SELECT, CALL)
+			java.sql.ResultSet resultat = null; // tableau resultat d'une requete SELECT
+			
+			String sql = "SELECT aka FROM personnages "
+					   + "WHERE prenom ='" + prenom + "' AND nom = '" + nom + "'";
+			
+			try {
+				connexion = java.sql.DriverManager.getConnection(this.url, this.login, this.pwd);
+				requete = connexion.createStatement();
+				resultat = requete.executeQuery(sql);
+				
+				// next() renvoie true et passe à la ligne suivante du tableau resultat 
+				//        renvoie false si il n'y a plus de ligne
+				if ( resultat.next() ) {
+					aka = resultat.getString(1); // index de la colonne
+				}
+				
+			} catch ( java.sql.SQLException e ) {
+				e.printStackTrace();
+			} finally {
+				if ( resultat != null ) {
+					try {
+						resultat.close();
+					} catch( java.sql.SQLException sqle ) {}
+				}
+				
+				if ( requete != null ) {
+					try {
+						requete.close();
+					} catch( java.sql.SQLException sqle ) {}
+				}
+				
+				if ( connexion != null ) {
+					try {
+						connexion.close();
+					} catch( java.sql.SQLException sqle ) {}
+				}
+			}
+		}
+		
+		return aka;
+	}
+
+	@Override
+	public String selectGenre(String prenom, String nom) {
+		String genre = null;
+		
+		if ( prenom != null && nom != null ) {
+			
+			String sql = "SELECT genres.nom AS gnom "
+					+    "FROM personnages JOIN genres ON fk_genre = num "
+					+    "WHERE prenom = ? AND personnages.nom = ?";
+			
+			// try with resource
+			// les objets de type Closeable peuvent être déclarés et instanciés dans les parenthèses
+			// du try et leur méthode close() sera automatiquement appelée à la fin du try
+			try (
+				java.sql.Connection connexion 
+					= java.sql.DriverManager.getConnection(this.url, this.login, this.pwd);
+				java.sql.PreparedStatement requete = connexion.prepareStatement(sql);
+			) {
+				requete.setString(1, prenom);
+				requete.setString(2, nom);
+				
+				try (
+					java.sql.ResultSet resultat = requete.executeQuery();	
+				) {
+					if ( resultat.next() ) {
+						genre = resultat.getString("gnom");
+					}
+				}
+				
+			} catch ( java.sql.SQLException e ) {
+				e.printStackTrace();
+			}
+		}
+		
+		return genre;
+	}
+
+	@Override
+	public java.util.List<String> selectPrenoms(String genre) {
+		java.util.List<String> prenoms = new java.util.ArrayList<String>();
+		
+		if ( genre != null ) {
+			
+			String sql = "SELECT prenom FROM genres JOIN personnages ON fk_genre = num "
+					+    "WHERE genres.nom = ?";
+			
+			try (
+				java.sql.Connection connexion 
+					= java.sql.DriverManager.getConnection(this.url, this.login, this.pwd);
+				java.sql.PreparedStatement requete = connexion.prepareStatement(sql);
+			) {
+				requete.setString(1, genre);
+				
+				try (
+					java.sql.ResultSet resultat = requete.executeQuery();
+				) {
+					while ( resultat.next() ) {
+						String prenom = resultat.getString(1);
+						prenoms.add(prenom);
+					}
+				}
+				
+			} catch ( java.sql.SQLException e ) {
+				e.printStackTrace();
+			}
+		}
+		
+		return prenoms;
+	}
+
+	@Override
+	public int insertPersonnage(String prenom, String nom, String aka, java.sql.Date ddn) {
+		int id = 0;
+		
+		if ( prenom != null && nom != null ) {
+			
+			String sqlSelect = "SELECT pk FROM personnages WHERE prenom = ? AND nom = ?";
+			String sqlInsert = "INSERT INTO personnages(prenom, nom, aka, ddn) VALUES(?, ?, ?, ?)";
+			
+			try (
+				java.sql.Connection connexion 
+					= java.sql.DriverManager.getConnection(this.url, this.login, this.pwd);
+				java.sql.PreparedStatement requeteSelect = connexion.prepareStatement(sqlSelect);
+				java.sql.PreparedStatement requeteInsert = connexion.prepareStatement(sqlInsert);
+			) {
+				requeteSelect.setString(1, prenom);
+				requeteSelect.setString(2, nom);
+				
+				try (
+					java.sql.ResultSet resultat = requeteSelect.executeQuery();
+				) {
+					if (! resultat.next() ) { // personnage n'existe pas déjà
+						// paramètrage de requeteInsert
+						requeteInsert.setString(1, prenom);
+						requeteInsert.setString(2, nom);
+						if ( aka != null ) {
+							requeteInsert.setString(3, aka);
+						} else {
+							requeteInsert.setNull(3, java.sql.Types.VARCHAR);
+						}
+						if ( ddn != null ) {
+							requeteInsert.setDate(4, ddn);
+						} else {
+							requeteInsert.setNull(4, java.sql.Types.DATE);
+						}
+						
+						// exécution de requeteInsert
+						// executeUpdate => INSERT, UPDATE, DELETE
+						int nbInsertions = requeteInsert.executeUpdate();
+						if ( nbInsertions > 0 ) {
+							try (
+								java.sql.ResultSet resultat2 = requeteSelect.executeQuery(); 	
+							) {
+								resultat2.next();
+								id = resultat2.getInt("pk");
+							}
+						}
+					}
+				}
+				
+			} catch ( java.sql.SQLException e ) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return id;
+	}
+
+	@Override
+	public void updateAka(String prenom, String nom, String aka) {
+		String sql = "{ call updatePersonnage(?, ?, ?) }";
+		
+		try (
+			java.sql.Connection connexion 
+				= java.sql.DriverManager.getConnection(this.url, this.login, this.pwd);
+			java.sql.CallableStatement requete = connexion.prepareCall(sql);
+		) {
+			requete.setString(1, prenom);
+			requete.setString(2,  nom);
+			requete.setString(3, aka);
+			
+			connexion.setAutoCommit(false);
+			
+			try {
+				requete.executeUpdate();
+				connexion.commit();
+			} catch( java.sql.SQLException sqle ) {
+				connexion.rollback();
+				throw sqle;
+			}
+			
+		} catch( java.sql.SQLException e ) {
+			e.printStackTrace();
+		}
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
